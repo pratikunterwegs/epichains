@@ -13,17 +13,18 @@
 #'     Value must be >= 0.
 #' @param t0 start time
 #' @param tf end time
-#' @param pop the population
-#' @param initial_immune the number of initial immunes in the population
+#' @param pop the population size
+#' @param initial_immune the number of initial immune individuals in the
+#' population
 #' @return a data frame with columns `time`, `id` (a unique ID for each
 #'     individual element of the chain), `ancestor` (the ID of the ancestor
 #'      of each element), and `generation`.
 #'
 #' @details This function has a couple of key differences with chain_sim:
-#'     it can only simulate one chain at a time,
-#'     it can only handle implemented offspring distributions
+#'     * it can only simulate one chain at a time,
+#'     * it can only handle implemented offspring distributions
 #'         ("pois" and "nbinom"),
-#'     it always tracks and returns a data frame containing the entire tree,
+#'     * it always tracks and returns a data frame containing the entire tree,
 #'     the maximal length of chains is limited with pop instead of infinite.
 #'
 #' @author Flavio Finger
@@ -50,7 +51,7 @@ chain_sim_susc <- function(offspring = c("pois", "nbinom"),
     }
 
     ## using a right truncated poisson distribution
-    ## to avoid more cases than susceptibles
+    ## to sampling more cases than susceptibles
     offspring_fun <- function(n, susc) {
       truncdist::rtrunc(
         n,
@@ -59,6 +60,7 @@ chain_sim_susc <- function(offspring = c("pois", "nbinom"),
         b = susc
       )
     }
+
   } else if (offspring == "nbinom") {
   if (missing(disp_offspring)) {
     stop(sprintf("%s", "Argument 'disp_offspring' was not specified."))
@@ -99,7 +101,7 @@ chain_sim_susc <- function(offspring = c("pois", "nbinom"),
   susc <- pop - initial_immune - 1L
   t <- t0
 
-  ## continue if any unsimulated has t <= tf
+  ## continue if any unsimulated chains have t <= tf
   ## AND there is still susceptibles left
   while (
     any(tdf$time[!tdf$offspring_generated] <= tf) &&
