@@ -1,7 +1,7 @@
 # get_statistic_func snapshots look right
 
     Code
-      body(pois_offspring_func)
+      writeLines(deparse(body(pois_offspring_func)))
     Output
       {
           truncdist::rtrunc(n, spec = "pois", lambda = mean_offspring * 
@@ -11,7 +11,7 @@
 ---
 
     Code
-      body(nbinom_offspring_func)
+      writeLines(deparse(body(nbinom_offspring_func)))
     Output
       {
           new_mn <- mean_offspring * susc/pop

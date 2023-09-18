@@ -75,7 +75,11 @@ test_that("get_statistic_func snapshots look right", {
     mean_offspring = mean_offspring,
     disp_offspring = disp_offspring
   )
-  expect_snapshot(body(pois_offspring_func))
+  expect_snapshot(
+    writeLines(
+      deparse(body(pois_offspring_func))
+    )
+  )
 
   nbinom_offspring_func <- get_offspring_func(
     offspring_dist = "nbinom",
@@ -85,7 +89,11 @@ test_that("get_statistic_func snapshots look right", {
     mean_offspring = mean_offspring,
     disp_offspring = disp_offspring
   )
-  expect_snapshot(body(nbinom_offspring_func))
+  expect_snapshot(
+    writeLines(
+      deparse(body(nbinom_offspring_func))
+    )
+  )
 })
 
 test_that("get_offspring_func throws errors", {
